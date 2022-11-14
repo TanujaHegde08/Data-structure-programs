@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,n,type)\
+  p=(type *)malloc(n*sizeof(type));\
+  if(p==NULL)\
+  { \
+        printf("In Sufficient memory\n");\
+        exit(0);\
+  }
+int main()
+{
+    int **a,i,j;
+    MALLOC(a,3,int *);
+    for(i=0;i<3;i++)
+    {
+        MALLOC(a[i],5,int);
+    }
+    printf("Enter array elements\n");
+    for(i=0;i<3;i++)
+    {
+        for(j=0;j<5;j++)
+        {
+            scanf("%d",&a[i][j]); // scanf("%d",a[i]+j);
+        }
+    }
+    printf("Array elements are\n");
+    for(i=0;i<3;i++)
+    {
+        for(j=0;j<5;j++)
+        {
+            printf("%d\t",a[i][j]); // printf("%d\t",*(a[i]+j));
+        }
+        printf("\n");
+    }
+    return 0;
+}

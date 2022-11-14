@@ -1,0 +1,46 @@
+
+#include <stdio.h>
+#define MAX 100
+typedef struct 
+{
+    int row;
+    int col;
+    int value;
+}matrix;
+matrix a[MAX];
+void create(int m,int n)
+{
+    int i,j,ele,k=1;
+    a[0].row=m;
+    a[0].col=n;
+    printf("Enter matrix elements\n");
+    for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            scanf("%d",&ele);
+            if(ele!=0)
+            {
+                a[k].row=i;
+                a[k].col=j;
+                a[k].value=ele;
+                k++;
+            }
+        }
+    }
+    a[0].value=k-1;
+    printf("Sparse matrix representation\n");
+    for(i=0;i<=a[0].value;i++)
+    {
+        printf("%d\t%d\t%d\n",a[i].row,a[i].col,a[i].value);
+    }
+    
+}
+void main()
+{
+    int m,n;
+    printf("Enter order of matrix\n");
+    scanf("%d%d",&m,&n);
+    create(m,n);
+   
+}

@@ -1,0 +1,37 @@
+
+#include <stdio.h>
+#include<string.h>
+void patternmatch(char text[],char pat[])
+{
+    int i,j,m,n,f=0;
+    m=strlen(pat);
+    n=strlen(text);
+    for(i=0;i<=n-m;i++)
+    {
+        for(j=0;j<m;j++)
+        {
+            if(pat[j]!=text[i+j])
+                break;
+        }
+        if(j==m)
+        {
+            printf("Pattern string present at index: %d\n",i);
+            f=1;
+        }
+    }
+    if(f==0)
+    {
+        printf("Pattern not present in text string\n");
+    }
+}
+int main()
+{
+   char text[100],pat[20];
+   printf("Enter text string\n");
+   scanf("%s",text);
+   printf("Enter pattern string\n");
+   scanf("%s",pat);
+   patternmatch(text,pat);
+
+    return 0;
+}

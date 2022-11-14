@@ -1,0 +1,105 @@
+#include<stdio.h>
+#define MAX_TERMS 100
+typedef struct 
+{
+    int coef;
+    int exp;
+}poly;
+poly p[MAX_TERMS];
+int avail=0;
+void attach(int c,int e)
+{
+    if(avail==MAX_TERMS)
+    {
+        printf("Can't add more terms\n");
+        return;
+    }
+    
+    p[avail].coef=c;
+    p[avail].exp=e;
+    avail++;
+    
+}
+void readpoly(int *start,int *end)
+{
+    int nterms,i,c,e;
+    *start=avail;
+    printf("Enter number of term\n");
+    scanf("%d",&nterms);
+    for(i=0;i<nterms;i++)
+    {
+        printf("Enter coefficient and exponent in decreasing order of exponents\n");
+        scanf("%d%d",&c,&e);
+        attach(c,e);
+    }
+    *end=avail-1;
+}
+void display(int s,int e)
+{
+    int i;
+    for(i=s;i<e;i++)
+    {
+        printf("%dx^%d+",p[i].coef,p[i].exp);
+    }
+    printf("%dx^%d\n",p[i].coef,p[i].exp);
+}
+int compare(int exp1,int exp2)
+{
+    if(exp1==exp2)
+        return 0;
+    else if(exp1<exp2)
+        return -1;
+    else
+        return 1;
+}
+void polyadd(int starta,int enda,int startb,int endb,int *startc,int *endc)
+{
+    int c,sum;
+    *startc=avail;
+    while(starta<=enda && startb<=endb)
+    {
+        c=compare(p[starta].exp,p[startb].exp);
+        switch(c)
+        {
+            case -1: attach(p[startb].coef,p[startb].exp);
+                     startb++;
+                     break;
+            case 0: sum=p[starta].coef+p[startb].coef;
+                    if(sum!=0)
+                    {
+                        attach(sum,p[starta].exp);
+                    }
+                    starta++;
+                    startb++;
+                    break;
+            case 1: attach(p[starta].coef,p[starta].exp);
+                    starta++;
+                    break;
+                    
+        }
+    }
+    for(;starta<=enda;starta++)
+    {
+        attach(p[starta].coef,p[starta].exp);
+    }
+    for(;startb<=endb;startb++)
+    {
+        attach(p[startb].coef,p[startb].exp);
+    }
+    *endc=avail-1;
+}
+void main()
+{
+    int starta,startb,startc,enda,endb,endc;
+    printf("Enter first polynomial\n");
+    readpoly(&starta,&enda);
+    printf("Enter second polynomial\n");
+    readpoly(&startb,&endb);
+    polyadd(starta,enda,startb,endb,&startc,&endc);
+    printf("First polynomial\n");
+    display(starta,enda);
+    printf("Second polynomial\n");
+    display(startb,endb);
+    printf("Resultant polynomial\n");
+    display(startc,endc);
+}
